@@ -4,13 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e7d36dd-da8c-4d3d-8bb9-1d10020fe328" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/serverpicture.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="1e7d36dd-da8c-4d3d-8bb9-1d10020fe328" name="Changes" comment="onlyworkversion">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/READMI.md" beforeDir="false" afterPath="$PROJECT_DIR$/READMI.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/nginx.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/static/hero-image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/static/images.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/static/upload.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +33,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;stdimka&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/stdimka/serverpicture.git&quot;,
+    &quot;accountId&quot;: &quot;db002085-c005-46be-8889-665d8dff5148&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -71,6 +89,23 @@
       <option name="presentableId" value="Default" />
       <updated>1747641652209</updated>
     </task>
+    <task id="LOCAL-00001" summary="onlyworkversion">
+      <option name="closed" value="true" />
+      <created>1748435576565</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748435576565</updated>
+    </task>
+    <task id="LOCAL-00002" summary="onlyworkversion">
+      <option name="closed" value="true" />
+      <created>1748435612088</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748435612088</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -83,5 +118,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="onlyworkversion" />
+    <option name="LAST_COMMIT_MESSAGE" value="onlyworkversion" />
   </component>
 </project>
