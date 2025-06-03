@@ -1,0 +1,136 @@
+<!-- static/upload.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузить изображение</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F5FF;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #0B0B0B;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #0060FF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004dc2;
+        }
+
+        #result {
+            margin-top: 20px;
+            color: green;
+        }
+
+        #error {
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Загрузите изображение</h1>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label>
+            <input type="file" id="fileInput" name="file" accept="image/*" required>
+        </label>
+        <br>
+        <button type="submit">Загрузить</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="error"></div>
+</div>
+
+<script>
+    document.getElementById("uploadForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById("fileInput");
+        const resultDiv = document.getElementById("result");
+        const errorDiv = document.getElementById("error");
+
+        const file = fileInput.files[0];
+        if (!file) {
+            errorDiv.textContent = "Файл не выбран";
+            return;
+        }
+
+        const allowedTypes = ["image/jpg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+            errorDiv.textContent = "Неподдерживаемый формат файла.";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            errorDiv.textContent = "Файл слишком большой. Максимум — 5 МБ.";
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/upload", {
+            method: "POST",
+            body: file,
+            headers: {
+                "Content-Type": "image/" + file.type.split("/")[1],
+                "X-File-Name": file.name
+            }
+        })
+        .then(response => {
+            if (response.status === 413) throw new Error("Payload Too Large");
+            if (response.status === 400) throw new Error("Unsupported Media Type");
+
+            return response.json();
+        })
+        .then(data => {
+            resultDiv.innerHTML = `
+                ✅ Успех! Ссылка на изображение:<br>
+                <a href="${data.url}" target="_blank">${data.url}</a>
+            `;
+            errorDiv.textContent = "";
+        })
+        .catch(err => {
+            console.error("Ошибка:", err);
+            errorDiv.textContent = "Ошибка: " + err.message;
+        });
+    });
+</script>
+
+</body>
+</html>
