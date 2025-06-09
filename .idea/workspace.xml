@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e7d36dd-da8c-4d3d-8bb9-1d10020fe328" name="Changes" comment="onlyworkversion">
+    <list default="true" id="1e7d36dd-da8c-4d3d-8bb9-1d10020fe328" name="Changes" comment="Ibarbylevsaynot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/READMI.md" beforeDir="false" afterPath="$PROJECT_DIR$/READMI.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/static/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/static/hero-image.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/static/images.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/static/upload.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +94,23 @@
       <option name="project" value="LOCAL" />
       <updated>1748435612088</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ibarbylevsaynot">
+      <option name="closed" value="true" />
+      <created>1748982082134</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1748982082134</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Ibarbylevsaynot">
+      <option name="closed" value="true" />
+      <created>1748982281264</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748982281264</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,6 +126,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="onlyworkversion" />
-    <option name="LAST_COMMIT_MESSAGE" value="onlyworkversion" />
+    <MESSAGE value="Ibarbylevsaynot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ibarbylevsaynot" />
   </component>
 </project>
