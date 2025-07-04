@@ -5,219 +5,163 @@
     <title>Images</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            background-color: #F2F5FF;
             font-family: 'Inter', sans-serif;
-            color: #0B0B0B;
+            background-color: #F2F5FF;
+            padding: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px;
         }
-
         .container {
-            position: absolute;
-            width: 1183px;
-            height: 659px;
-            background: #FFFFFF;
-            border: 1px solid #4676FB;
-            border-radius: 22px;
-            padding: 40px;
+            width: 80%;
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
+        h1 {
+            margin-bottom: 20px;
             text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header-title {
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 14px;
-            letter-spacing: -0.02em;
             color: #0B0B0B;
         }
-
-        .header-subtitle {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 21px;
-            letter-spacing: -0.04em;
-            color: #0B0B0B;
-        }
-
-        .tab {
-            display: flex;
-            justify-content: center;
-            gap: 88px;
-            margin-bottom: 40px;
-        }
-
-        .tab span {
-            font-size: 20px;
-            line-height: 24px;
-            cursor: pointer;
-        }
-
-        .tab .active {
-            color: #0060FF;
-            font-weight: 700;
-        }
-
-        .tab .inactive {
-            color: #ADC0F8;
-            font-weight: 400;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
-
         th, td {
-            padding: 10px;
-            font-size: 14px;
-            color: #0B0B0B;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
         }
-
         th {
-            font-weight: 600;
-            color: #555;
+            background-color: #f0f0f0;
         }
-
-        tr + tr {
-            border-top: 1px solid #e0e0e0;
-        }
-
         .delete-button {
             background: none;
             border: none;
             cursor: pointer;
+            color: #FF3333;
+            font-size: 18px;
         }
-
-        .delete-circle {
-            width: 30px;
-            height: 30px;
-            background-color: rgba(255, 0, 0, 0.05);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .pagination {
+            text-align: center;
         }
-
-        .delete-cross {
-            width: 9.2px;
-            height: 10.22px;
-            background: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"%3E%3Cpath d="M6 4H4v2h2V4z M8 5l-.5.5L5 8l-2.5-2.5L2 5l2.5-2.5L7 5L8 5z"/%3E%3C/svg%3E') no-repeat center center;
-            background-size: contain;
+        .pagination button {
+            background: #0060FF;
+            color: white;
+            border: none;
+            margin: 0 3px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
         }
-
-        a {
-            color: #0060FF;
-            text-decoration: none;
-        }
-
-        small {
-            color: #ADC0F8;
-            font-size: 13px;
+        .pagination button.active {
+            background: #0041b3;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <div class="header-title">Upload photos</div>
-        <div class="header-subtitle">Upload selfies, memes, or any fun pictures here.</div>
-    </div>
-
-    <div class="tab">
-        <a href="/upload.html"><span class="inactive">Upload</span></a>
-        <span class="active">Images</span>
-    </div>
-
+    <h1>Список изображений</h1>
     <table>
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Имя файла</th>
                 <th>URL</th>
-                <th>Delete</th>
+                <th>Дата загрузки</th>
+                <th>Удалить</th>
             </tr>
         </thead>
         <tbody id="file-table-body">
-            <!-- Сюда будут добавлены строки с файлами -->
+            <tr><td colspan="4">Загрузка...</td></tr>
         </tbody>
     </table>
+
+    <div class="pagination" id="pagination"></div>
 </div>
 
 <script>
-    // Получаем список файлов с бэкенда
-    fetch("/api/list-images")
-        .then(res => res.json())
-        .then(files => {
-            const tbody = document.getElementById("file-table-body");
-            if (!files.length) {
-                tbody.innerHTML = "<tr><td colspan='3'>Нет загруженных изображений</td></tr>";
-                return;
-            }
+    let currentPage = 1;
+    let totalPages = 1;
 
-            files.forEach(file => {
-                const row = document.createElement("tr");
+    function loadImages(page = 1) {
+        fetch(`/api/get-data?page=${page}`)
+            .then(res => res.json())
+            .then(data => {
+                currentPage = data.page;
+                const tbody = document.getElementById("file-table-body");
+                tbody.innerHTML = "";
 
-                const nameCell = document.createElement("td");
-                nameCell.textContent = file;
+                if (!data.items.length) {
+                    tbody.innerHTML = "<tr><td colspan='4'>Нет загруженных изображений</td></tr>";
+                    return;
+                }
 
-                const linkCell = document.createElement("td");
-                const link = document.createElement("a");
-                link.href = `/images/${file}`;
-                link.target = "_blank";
-                link.textContent = window.location.origin + "/images/" + file;
+                data.items.forEach(file => {
+                    const row = document.createElement("tr");
 
-                const deleteCell = document.createElement("td");
-                const button = document.createElement("button");
-                button.className = "delete-button";
-                button.onclick = () => {
-                    if (confirm("Удалить файл?")) {
-                        fetch(`/api/delete/${file}`, { method: "DELETE" })
-                            .then(() => location.reload())
-                            .catch(err => alert("Ошибка при удалении"));
-                    }
-                };
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = file.original_name;
 
-                const circle = document.createElement("div");
-                circle.className = "delete-circle";
+                    const linkCell = document.createElement("td");
+                    const link = document.createElement("a");
+                    link.href = `/images/${file.name}`;
+                    link.target = "_blank";
+                    link.textContent = window.location.origin + "/images/" + file.name;
+                    linkCell.appendChild(link);
 
-                const cross = document.createElement("div");
-                cross.className = "delete-cross";
+                    const dateCell = document.createElement("td");
+                    dateCell.textContent = file.uploaded_at;
 
-                circle.appendChild(cross);
-                button.appendChild(circle);
+                    const deleteCell = document.createElement("td");
+                    const delBtn = document.createElement("button");
+                    delBtn.className = "delete-button";
+                    delBtn.innerHTML = "&times;";
+                    delBtn.onclick = () => {
+                        if (confirm("Удалить файл?")) {
+                            fetch(`/delete/${file.id}/`, { method: "POST" })
+                                .then(() => loadImages(currentPage))
+                                .catch(err => alert("Ошибка при удалении"));
+                        }
+                    };
+                    deleteCell.appendChild(delBtn);
 
-                deleteCell.appendChild(button);
+                    row.appendChild(nameCell);
+                    row.appendChild(linkCell);
+                    row.appendChild(dateCell);
+                    row.appendChild(deleteCell);
 
-                linkCell.appendChild(link);
-                row.appendChild(nameCell);
-                row.appendChild(linkCell);
-                row.appendChild(deleteCell);
-                tbody.appendChild(row);
+                    tbody.appendChild(row);
+                });
+
+                totalPages = Math.ceil(data.total / 5);
+                renderPagination();
+            })
+            .catch(err => {
+                console.error("Ошибка:", err);
+                document.getElementById("file-table-body").innerHTML =
+                    "<tr><td colspan='4'>Ошибка загрузки списка</td></tr>";
             });
-        })
-        .catch(err => {
-            console.error("Не удалось получить список изображений", err);
-            document.getElementById("file-table-body").innerHTML = "<tr><td colspan='3'>Ошибка загрузки списка</td></tr>";
-        });
+    }
+
+    function renderPagination() {
+        const paginationDiv = document.getElementById("pagination");
+        paginationDiv.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add("active");
+            btn.onclick = () => loadImages(i);
+            paginationDiv.appendChild(btn);
+        }
+    }
+
+    loadImages();
 </script>
 
 </body>

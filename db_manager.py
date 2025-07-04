@@ -1,10 +1,11 @@
 import psycopg2
 import os
+import time
 
 postgres_config = {
-    "host": os.getenv("POSTGRES_HOST", "localhost"),
-    "database": os.getenv("POSTGRES_DB", "images_db"),
-    "user": os.getenv("POSTGRES_USER", "images_user"),
+    "host": os.getenv("POSTGRES_HOST", "db"),
+    "database": os.getenv("POSTGRES_DB", "mydb"),
+    "user": os.getenv("POSTGRES_USER", "myuser"),
     "password": os.getenv("POSTGRES_PASSWORD", "mypassword"),
     "port": 5432
 }
@@ -15,8 +16,16 @@ class PostgresManager:
         self.conn = None
 
     def __enter__(self):
-        self.conn = psycopg2.connect(**self.config)
-        return self
+        max_attempts = 10
+        for attempt in range(1, max_attempts + 1):
+            try:
+                self.conn = psycopg2.connect(**self.config)
+                print(f"✅ Connected to Postgres on attempt {attempt}")
+                return self
+            except psycopg2.OperationalError as e:
+                print(f"⚠️ Postgres not ready, attempt {attempt}/{max_attempts}. Retrying in 3s...")
+                time.sleep(3)
+        raise Exception("❌ Could not connect to Postgres after retries.")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.conn:

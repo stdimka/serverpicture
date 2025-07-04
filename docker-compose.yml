@@ -6,6 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: image-server-app
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
     volumes:
       - images:/images
       - logs:/logs
@@ -15,6 +20,22 @@ services:
     networks:
       - image-network
     restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    container_name: image-server-db
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - image-network
+    ports:
+      - "5432:5432"
 
   nginx:
     image: nginx:alpine
@@ -36,6 +57,7 @@ volumes:
   images:
   logs:
   static:
+  pgdata:
 
 networks:
   image-network:

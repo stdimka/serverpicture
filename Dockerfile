@@ -25,8 +25,10 @@ COPY --from=builder /install /usr/local
 # Копирую исходный код
 COPY app.py .
 
+COPY db_manager.py .
+
 # Копирую статические файлы
-COPY static/ /static/
+COPY static/ static/
 
 # Создаю папки для изображений и логов
 RUN mkdir -p /images /logs
