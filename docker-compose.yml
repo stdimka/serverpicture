@@ -35,7 +35,7 @@ services:
     networks:
       - image-network
     ports:
-      - "5432:5432"
+      - "5435:5432"
 
   nginx:
     image: nginx:alpine
